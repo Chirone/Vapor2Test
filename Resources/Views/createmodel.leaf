@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+	<head>
+		<style>
+            .column
+            {
+                display: inline-block;
+                float: left,
+                vertical-align: top;
+            }
+        </style>
+		<title></title>
+	</head>
+	<body>
+		
+		Add input
+		
+		<script language="Javascript" type="text/javascript">
+			var counter = 1;
+			
+			function addInput(divName) {
+				var newdiv = document.createElement('div');
+				newdiv.innerHTML = "Variable name " + (counter + 1) + "<br><input type='text' name='variables[]'>";
+				document.getElementById(divName).appendChild(newdiv);
+				counter++;
+			}
+		</script>
+		
+		<form action="/model/create" method="post">
+			<div id="dynamicInput" class="column">
+				Variable 1<br><input type="text", name="variables[]">
+			</div>
+            <br>
+            <input type="button" value="Add another variable" onClick="addInput('dynamicInput');">
+			<br>
+			<br>
+			<input type="submit" value="Submit">
+		</form>
+		
+	</body>
+</html>
