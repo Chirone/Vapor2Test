@@ -28,11 +28,19 @@ class ModelGeneratorController {
 	}
 	
 	func postModelCode(_ request: Request) throws -> ResponseRepresentable {
-		guard let drop = drop,
-			let input = request.data["name"]?.string else {
+		
+		guard let variableNames = request.formURLEncoded?["variable_names"]?.array?.flatMap({ $0.string }),
+			let jsonKeys = request.formURLEncoded?["json_keys"]?.array?.flatMap({ $0.string }) else {
 				throw Abort.badRequest
 		}
 		
-		return "the name is \(input)"
+		// Enum
+		var code = "private enum ColumnName: String {\n"
+		for (variableName, jsonKey) in zip(variableNames, jsonKeys) {
+			code += "\tcase \(variableName) = \"\(jsonKey)\"\n"
+		}
+		code += "}"
+		
+		return "code is \n\(code)"
 	}
 }

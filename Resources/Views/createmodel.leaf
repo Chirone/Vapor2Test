@@ -6,8 +6,8 @@
             .column
             {
                 display: inline-block;
-                float: left,
                 vertical-align: top;
+                font-family: arial
             }
         </style>
 		<title></title>
@@ -19,24 +19,40 @@
 		<script language="Javascript" type="text/javascript">
 			var counter = 1;
 			
-			function addInput(divName) {
-				var newdiv = document.createElement('div');
-				newdiv.innerHTML = "Variable name " + (counter + 1) + "<br><input type='text' name='variables[]'>";
-				document.getElementById(divName).appendChild(newdiv);
+            function newInputCell(fieldName, array) {
+                var newdiv = document.createElement('div');
+                newdiv.className = "dynamicInput";
+                newdiv.innerHTML = fieldName + "<br><input type='text' name='" + array + "[]'>";
+                
+                return newdiv
+            }
+			function addInput(divLeft, divRight) {
+				var leftDiv = newInputCell("Variable Name", "variable_names")
+                var rightDiv = newInputCell("JSON Key", "json_keys")
+				document.getElementById(divLeft).appendChild(leftDiv);
+                document.getElementById(divRight).appendChild(rightDiv);
 				counter++;
 			}
 		</script>
 		
 		<form action="/model/create" method="post">
 			<div id="dynamicInput" class="column">
-				Variable 1<br><input type="text", name="variables[]">
+                <div class="column" id="divLeft">
+					
+                </div>
+                <div class="column" id="divRight">
+					
+                </div>
 			</div>
             <br>
-            <input type="button" value="Add another variable" onClick="addInput('dynamicInput');">
+            <br>
+            <input type="button" value="Add another variable" onClick="addInput('divLeft', 'divRight');">
 			<br>
 			<br>
 			<input type="submit" value="Submit">
 		</form>
+		
+		
 		
 	</body>
 </html>
